@@ -1,0 +1,155 @@
+.head {
+    text-align: center;
+    background-color: rgb(0, 0, 0);
+    color: aliceblue;
+    height: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+
+.button {
+    align-items: center;
+    background-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
+    border: 0;
+    border-radius: 8px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: flex;
+    font-family: Phantomsans, sans-serif;
+    font-size: 18px;
+    justify-content: center;
+    line-height: 1em;
+    max-width: 100%;
+    min-width: 140px;
+    padding: 3px;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all .3s;
+
+    background-color: rgb(5, 6, 45);
+    padding: 16px 24px;
+    border-radius: 6px;
+    width: 100%;
+    height: 100%;
+    transition: 300ms;
+
+}
+
+
+.middle1 {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    margin-left: 70%;
+
+
+}
+
+.details {
+    padding-left: 10px;
+}
+
+.add {
+    margin: 10px;
+}
+
+.sell {
+    margin: 10px;
+}
+
+.database {
+    background-color: aquamarine;
+    border-color: black;
+    width: 100%;
+    height: 100%;
+    border-width: 10px;
+}
+
+.det1 {
+    padding-left: 30px;
+    line-height: 5px;
+    font-size: 80px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: aliceblue;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+.outer {
+
+    background-image: url(../images/ware.jpg);
+    min-height: 100vh;
+
+}
+
+.in {
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    font-family: sans-serif;
+    padding-left: 30px;
+    letter-spacing: 1.5px;
+
+}
+
+.det2 {
+    background-color: rgba(232, 236, 237, 255);
+    padding: 10px 10px 10px 10px;
+    display: flex;
+
+
+}
+
+.det2p1 {
+    font-size: 40px;
+    width: 30%;
+    padding-left: 40px;
+}
+
+.det2p2 {
+    width: 500px;
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.det2p3 {
+    width: 500px;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.firstp {
+    width: 70%;
+}
+
+.secondp {
+    padding: 10px 0px 10px 10px;
+
+}
+
+.img1 {
+    background-image: url(../images/war2.jpg);
+    background-size: cover;
+    width: 272px;
+    height: 206px;
+    margin-top: 50%;
+}
+
+.about {
+    text-align: center;
+    background-color: #999999;
+    padding: 10px;
+}
+
+.aboutp {
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+
+}

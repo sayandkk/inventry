@@ -1,0 +1,12 @@
+.sdet {
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.fulldet {
+    width: 100%;
+    height: 100px;
+    background-color: #b1a8c3;
+    display: flex;
+
+}
