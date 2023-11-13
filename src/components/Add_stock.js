@@ -147,7 +147,8 @@ function Add_stock() {
             <p className="adr">
               Price:{" "}
               <p className="adp">
-                {item.price}/{item.unit}
+                {item.price}
+                {"₹"}/{item.unit}
               </p>
             </p>
             <button className="adbutton" onClick={() => editItem(item.id)}>
