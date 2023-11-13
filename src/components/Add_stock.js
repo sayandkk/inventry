@@ -1,95 +1,63 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react';
 import "./Add_stock.css"
 
-import { useState } from 'react';
-
-
 function Add_stock() {
+    const [items, setItems] = useState([]);
+    const [itemName, setItemName] = useState('');
+    const [itemQuantity, setItemQuantity] = useState('');
+    const [itemPrice, setItemPrice] = useState('');
 
-
-
+    const addItem = () => {
+        if (itemName && itemQuantity && itemPrice) {
+            const newItem = {
+                name: itemName,
+                quantity: itemQuantity,
+                price: itemPrice,
+            };
+            setItems([...items, newItem]);
+            setItemName('');
+            setItemQuantity('');
+            setItemPrice('');
+        } else {
+            alert('Please fill in all fields');
+        }
+    };
 
     return (
         <div>
-            <div className='header'>
-                <h1 >ADD STOCK</h1>
+            <h1>ADD STOCK</h1>
+            <div className='inpubox'>
+                <input
+                    type="text"
+                    placeholder="Name"
+                    value={itemName}
+                    onChange={(e) => setItemName(e.target.value)}
+                />
+                <input
+                    type="number"
+                    placeholder="Quantity"
+                    value={itemQuantity}
+                    onChange={(e) => setItemQuantity(e.target.value)}
+                />
+                <input
+                    type="number"
+                    placeholder="Price"
+                    value={itemPrice}
+                    onChange={(e) => setItemPrice(e.target.value)}
+                />
+                <button onClick={addItem}>Add Item</button>
             </div>
-
-
-
-            <div className='sdetails'>
-                <div className='no'>
-                    <p>No</p>
-                    <input type="text"  ></input>
-
-                </div>
-                <div className='name'>
-                    <p>Name</p>
-                    <input type="text" ></input>
-                </div>
-
-                <div className='qty'>
-                    <p>Qty</p>
-                    <input type="text"  ></input>
-                </div>
-                <div className='price'>
-                    <p>Price</p>
-                    <input type="text" ></input>
-                </div>
-
-                <div className='sub'>
-                    <button type="button" class="sbutton" >
-                        Submitt
-
-                    </button>
-                </div>
-
-
-
-
-
-
-
-
-
-            </div>
-
-            <div className='sdet'>
-
-
-                <h1>STOCK DETAILS</h1>
-
-                <div className='fulldet'>
-                    <div className='no'>
-                        <p>No</p>
-
+            <ul>
+                {items.map((item, index) => (
+                    <div key={index} className='result'>
+                        <p>Name: {item.name}</p>
+                        <p>Quantity: {item.quantity}</p>
+                        <p>Price: {item.price}</p>
                     </div>
-                    <div className='name'>
-                        <p>Name</p>
-                    </div>
-
-                    <div className='qty'>
-                        <p>Qty</p>
-                    </div>
-                    <div className='price'>
-                        <p>Price</p>
-
-                    </div>
-
-
-
-                </div>
-
-
-            </div>
-
-
-
-
+                ))}
+            </ul>
         </div>
-
-    )
+    );
 }
+
 export default Add_stock;
-
-
