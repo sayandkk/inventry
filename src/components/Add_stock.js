@@ -3,8 +3,10 @@ import {
   collection,
   doc,
   getDocs,
+  getDoc,
   addDoc,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { database } from "./Firebase";
 import "./Add_stock.css";
@@ -12,12 +14,12 @@ import "./Add_stock.css";
 function Add_stock() {
   const [itemName, setItemName] = useState("");
   const [itemQuantity, setItemQuantity] = useState("");
-  const [itemUnit, setItemUnit] = useState(""); // Added state for unit
+  const [itemUnit, setItemUnit] = useState("");
   const [itemPrice, setItemPrice] = useState("");
   const [items, setItems] = useState([]);
   const [editItemId, setEditItemId] = useState(null);
+  const [newQuantities, setNewQuantities] = useState({});
 
-  // Define unit options
   const unitOptions = ["Kg", "Litre", "Meter", "Piece"];
 
   useEffect(() => {
@@ -28,7 +30,13 @@ function Add_stock() {
         id: doc.id,
         ...doc.data(),
       }));
-      setItems(itemsArray);
+
+      // Sort items alphabetically based on their names
+      const sortedItems = itemsArray.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+
+      setItems(sortedItems);
     };
 
     fetchItems();
@@ -63,13 +71,18 @@ function Add_stock() {
         setItemUnit("");
         setItemPrice("");
 
-        // Fetch items again to update the items state
         const updatedItemsSnapshot = await getDocs(itemsCollection);
         const updatedItemsArray = updatedItemsSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        setItems(updatedItemsArray);
+
+        // Sort items alphabetically based on their names after the update
+        const sortedItems = updatedItemsArray.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+
+        setItems(sortedItems);
       } catch (error) {
         console.error(
           "Error adding/updating item to Firestore:",
@@ -81,6 +94,63 @@ function Add_stock() {
     }
   };
 
+  const deleteItem = async (id) => {
+    try {
+      const itemDoc = doc(database, "items", id);
+
+      if (newQuantities[id] !== "") {
+        const currentDoc = await getDoc(itemDoc);
+        const currentQuantity = currentDoc.data().quantity;
+
+        // Calculate the remaining quantity after deletion
+        const remainingQuantity =
+          currentQuantity - parseInt(newQuantities[id], 10);
+
+        if (remainingQuantity <= 0) {
+          // If remaining quantity is zero or negative, delete the item
+          await deleteDoc(itemDoc);
+
+          // Update the items state after deletion
+          const updatedItems = items.filter((item) => item.id !== id);
+
+          // Sort items alphabetically based on their names after deletion
+          const sortedItems = updatedItems.sort((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+
+          setItems(sortedItems);
+        } else {
+          // If remaining quantity is positive, update the item with the new quantity
+          await updateDoc(itemDoc, { quantity: remainingQuantity });
+
+          // Fetch the updated item data after the update
+          const updatedItemDoc = await getDoc(itemDoc);
+          const updatedItem = {
+            id: updatedItemDoc.id,
+            ...updatedItemDoc.data(),
+          };
+
+          // Update the items state with the modified item
+          const updatedItems = items.map((item) =>
+            item.id === updatedItem.id ? updatedItem : item
+          );
+
+          // Sort items alphabetically based on their names after the update
+          const sortedItems = updatedItems.sort((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+
+          setItems(sortedItems);
+        }
+
+        // Reset the new quantity for the item
+        setNewQuantities({ ...newQuantities, [id]: "" });
+      }
+    } catch (error) {
+      console.error("Error updating/deleting item in Firestore:", error.message);
+    }
+  };
+
   const editItem = (id) => {
     const selectedItem = items.find((item) => item.id === id);
     if (selectedItem) {
@@ -89,12 +159,20 @@ function Add_stock() {
       setItemUnit(selectedItem.unit);
       setItemPrice(selectedItem.price);
       setEditItemId(id);
+
+      // Initialize the new quantity state for the edited item
+      setNewQuantities({ ...newQuantities, [id]: "" });
     }
   };
 
   return (
     <div className="adding">
-      <h1>ADD STOCK</h1>
+
+
+
+
+
+      <h1>Sells</h1>
       <div className="inpubox">
         <input
           type="text"
@@ -132,31 +210,46 @@ function Add_stock() {
           {editItemId ? "Update Item" : "Add Item"}
         </button>
       </div>
-      <ul className="adul">
-        {items.map((item) => (
-          <div key={item.id} className="result">
-            <p className="adr">
-              Name: <p className="adp">{item.name}</p>
-            </p>
-            <p className="adr">
-              Quantity:{" "}
-              <p className="adp">
+      <table className="adtable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((item) => (
+            <tr key={item.id}>
+              <td>{item.name}</td>
+              <td>
                 {item.quantity} {item.unit}
-              </p>
-            </p>
-            <p className="adr">
-              Price:{" "}
-              <p className="adp">
+              </td>
+              <td>{item.unit}</td>
+              <td>
                 {item.price}
                 {"₹"}/{item.unit}
-              </p>
-            </p>
-            <button className="adbutton" onClick={() => editItem(item.id)}>
-              Edit
-            </button>
-          </div>
-        ))}
-      </ul>
+              </td>
+              <td>
+                <button className="adbutton" onClick={() => editItem(item.id)}>
+                  Edit
+                </button>
+              </td>
+              <td>
+                <button
+                  className="adbutton"
+                  onClick={() => deleteItem(item.id)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

@@ -24,10 +24,6 @@ export const Home = () => {
 
 
 
-                        <button type="button" class="button" onClick={() => navigate("/Sells")} >
-                            Sell
-
-                        </button>
 
 
 
@@ -36,7 +32,17 @@ export const Home = () => {
                     </div>
                     <div className='add'>
                         <button type="button" class="button" onClick={() => navigate("/Add_stock")} >
-                            Add
+                            STOCK DETAILS
+
+                        </button>
+                    </div>
+
+
+
+
+                    <div className='add'>
+                        <button type="button" class="button" onClick={() => navigate("/Sell")} >
+                            SAILS
 
                         </button>
                     </div>

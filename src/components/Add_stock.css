@@ -1,85 +1,123 @@
 .adding {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .adding>h1 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .inpubox {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0;
-  }
-  .adop{
-    width: 215px !important;
-  }
-  .adr{
-    display: flex;
-    gap: 10px;
-  }
-  .adp{
-    font-weight: 700;
-  }
-  
-  .inpubox input,
-  .inpubox select,
-  .inpubox button {
-    margin: 10px;
-    padding: 8px;
-    font-size: 16px;
-  }
-  
-  .inpubox select {
-    width: 100%;
-  }
-  
-  .adbutton {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .adbutton:hover {
-    background-color: #45a049;
-  }
-  
-  .adul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .result {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-    display: flex;
-    gap: 20px;
-  }
-  
-  .result p {
-    margin: 0;
-  }
-  
-  .result button {
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .result button:hover {
-    background-color: #006080;
-  }
-  
+
+  margin: 0 auto;
+  padding: 20px;
+
+
+}
+
+.adding>h1 {
+  text-align: center;
+  color: #333;
+}
+
+.inpubox {
+  display: flex;
+  align-items: center;
+  margin: 81px 0;
+  background-color: rgb(133, 136, 141);
+  border-radius: 25px;
+  width: 100% px;
+  align-items: center;
+  padding: 10px;
+
+}
+
+.adop {
+  width: 215px !important;
+}
+
+.adr {
+  display: flex;
+  gap: 10px;
+}
+
+.adp {
+  font-weight: 700;
+}
+
+.inpubox input,
+.inpubox select,
+.inpubox button {
+  margin: 10px;
+  padding: 8px;
+  font-size: 16px;
+
+}
+
+.inpubox {
+  display: flex;
+}
+
+.inpubox select {
+  width: 100%;
+}
+
+.adbutton {
+  background-color: #163288;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.adbutton:hover {
+  background-color: #c2b8bd;
+}
+
+.adul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.result {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  display: flex;
+  gap: 20px;
+  width: 100%S;
+}
+
+.result p {
+  margin: 0;
+}
+
+.result button {
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.result button:hover {
+  background-color: #7395a0;
+}
+
+.adtable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+
+
+
+.adtable th,
+.adtable td {
+  border: 1px solid rgb(13, 13, 13);
+  /* Set the border color to blue */
+  padding: 8px;
+  text-align: left;
+}
+
+.adtable th {
+  background-color: #beb7b7;
+  /* Add a background color for header cells */
+}
