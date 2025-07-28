@@ -166,6 +166,161 @@ function Sell() {
         }
     };
 
+    // Print functions
+    const handlePrintReceipt = () => {
+        if (cart.length === 0) {
+            alert("Cart is empty. Add items to generate a receipt.");
+            return;
+        }
+
+        const printWindow = window.open('', '_blank');
+        const currentDate = new Date().toLocaleString();
+
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Sales Receipt - ${currentDate}</title>
+                <style>
+                    body { font-family: Arial, sans-serif; margin: 20px; max-width: 400px; }
+                    .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
+                    .company-name { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
+                    .receipt-title { font-size: 16px; margin-bottom: 5px; }
+                    .date { font-size: 12px; color: #666; }
+                    .customer-info { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; }
+                    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                    th, td { border: 1px solid #000; padding: 5px; text-align: left; }
+                    th { background-color: #f0f0f0; font-weight: bold; font-size: 12px; }
+                    td { font-size: 11px; }
+                    .total-row { font-weight: bold; background-color: #f9f9f9; }
+                    .footer { margin-top: 20px; text-align: center; font-size: 10px; color: #666; }
+                    .text-right { text-align: right; }
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <div class="company-name">Das&Co</div>
+                    <div class="receipt-title">Sales Receipt</div>
+                    <div class="date">${currentDate}</div>
+                </div>
+                
+                <div class="customer-info">
+                    <strong>Customer Information:</strong><br>
+                    Name: ${customerInfo.name || 'Walk-in Customer'}<br>
+                    ${customerInfo.email ? `Email: ${customerInfo.email}<br>` : ''}
+                    ${customerInfo.phone ? `Phone: ${customerInfo.phone}<br>` : ''}
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${cart.map(item => `
+                            <tr>
+                                <td>${item.name}</td>
+                                <td>${item.quantity}</td>
+                                <td class="text-right">₹${Number(item.price || 0).toFixed(2)}</td>
+                                <td class="text-right">₹${(Number(item.price || 0) * item.quantity).toFixed(2)}</td>
+                            </tr>
+                        `).join('')}
+                        <tr class="total-row">
+                            <td colspan="3"><strong>TOTAL</strong></td>
+                            <td class="text-right"><strong>₹${getTotalAmount().toFixed(2)}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="footer">
+                    <p>Thank you for your business!</p>
+                    <p>Das&Co Inventory Management System</p>
+                </div>
+            </body>
+            </html>
+        `);
+
+        printWindow.document.close();
+        printWindow.print();
+    };
+
+    const handlePrintAvailableItems = () => {
+        const availableItems = getFilteredItems();
+        const printWindow = window.open('', '_blank');
+        const currentDate = new Date().toLocaleDateString();
+
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Available Items for Sale - ${currentDate}</title>
+                <style>
+                    body { font-family: Arial, sans-serif; margin: 20px; }
+                    .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
+                    .company-name { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
+                    .report-title { font-size: 18px; margin-bottom: 5px; }
+                    .date { font-size: 12px; color: #666; }
+                    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                    th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+                    th { background-color: #f0f0f0; font-weight: bold; }
+                    .summary { margin-bottom: 20px; }
+                    .summary-item { display: inline-block; margin-right: 30px; }
+                    .footer { margin-top: 30px; text-align: center; font-size: 10px; color: #666; }
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <div class="company-name">Das&Co Inventory Management</div>
+                    <div class="report-title">Available Items for Sale</div>
+                    <div class="date">Generated on: ${currentDate}</div>
+                </div>
+                
+                <div class="summary">
+                    <div class="summary-item"><strong>Available Items:</strong> ${availableItems.length}</div>
+                    <div class="summary-item"><strong>Total Stock:</strong> ${availableItems.reduce((sum, item) => sum + Number(item.quantity || 0), 0)}</div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>SKU</th>
+                            <th>Category</th>
+                            <th>Available Qty</th>
+                            <th>Unit</th>
+                            <th>Price (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${availableItems.map(item => `
+                            <tr>
+                                <td>${item.name}</td>
+                                <td>${item.sku || 'N/A'}</td>
+                                <td>${item.category || 'N/A'}</td>
+                                <td>${item.quantity}</td>
+                                <td>${item.unit || 'N/A'}</td>
+                                <td>₹${Number(item.price || 0).toFixed(2)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+
+                <div class="footer">
+                    <p>This report shows all items currently available for sale</p>
+                    <p>Das&Co Inventory Management System</p>
+                </div>
+            </body>
+            </html>
+        `);
+
+        printWindow.document.close();
+        printWindow.print();
+    };
+
     return (
         <div className="inventory-container">
             <div className="inventory-wrapper">
@@ -173,6 +328,16 @@ function Sell() {
                 <div className="inventory-header">
                     <h1 className="inventory-title">💰 Sales Point</h1>
                     <p className="inventory-subtitle">Sell items and manage transactions</p>
+                </div>
+
+                {/* Print Actions */}
+                <div className="print-actions">
+                    <button className="print-btn" onClick={handlePrintReceipt}>
+                        🧾 Print Receipt
+                    </button>
+                    <button className="print-btn" onClick={handlePrintAvailableItems}>
+                        📋 Print Available Items
+                    </button>
                 </div>
 
                 {/* Navigation */}

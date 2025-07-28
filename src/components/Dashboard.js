@@ -62,6 +62,93 @@ function Dashboard() {
         .sort((a, b) => b.totalValue - a.totalValue)
         .slice(0, 5);
 
+    // Print functions
+    const handlePrint = () => {
+        window.print();
+    };
+
+    const handlePrintInventory = () => {
+        const printWindow = window.open('', '_blank');
+        const currentDate = new Date().toLocaleDateString();
+
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Complete Inventory Report - ${currentDate}</title>
+                <style>
+                    body { font-family: Arial, sans-serif; margin: 20px; }
+                    .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
+                    .company-name { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
+                    .report-title { font-size: 18px; margin-bottom: 5px; }
+                    .date { font-size: 12px; color: #666; }
+                    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                    th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+                    th { background-color: #f0f0f0; font-weight: bold; }
+                    .summary { margin-bottom: 20px; }
+                    .summary-item { display: inline-block; margin-right: 30px; }
+                    .footer { margin-top: 30px; text-align: center; font-size: 10px; color: #666; }
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <div class="company-name">Das&Co Inventory Management</div>
+                    <div class="report-title">Complete Inventory Report</div>
+                    <div class="date">Generated on: ${currentDate}</div>
+                </div>
+                
+                <div class="summary">
+                    <div class="summary-item"><strong>Total Items:</strong> ${totalItems}</div>
+                    <div class="summary-item"><strong>Total Quantity:</strong> ${totalQuantity}</div>
+                    <div class="summary-item"><strong>Total Value:</strong> ₹${totalValue.toLocaleString()}</div>
+                    <div class="summary-item"><strong>Low Stock Items:</strong> ${lowStockItems.length}</div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>SKU</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Unit</th>
+                            <th>Price (₹)</th>
+                            <th>Total Value (₹)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${items.map(item => {
+            const qty = Number(item.quantity || 0);
+            const status = qty === 0 ? 'Out of Stock' : qty < 10 ? 'Low Stock' : 'In Stock';
+            return `
+                                <tr>
+                                    <td>${item.name}</td>
+                                    <td>${item.sku || 'N/A'}</td>
+                                    <td>${item.category || 'N/A'}</td>
+                                    <td>${qty}</td>
+                                    <td>${item.unit || 'N/A'}</td>
+                                    <td>${Number(item.price || 0).toFixed(2)}</td>
+                                    <td>${(Number(item.price || 0) * qty).toFixed(2)}</td>
+                                    <td>${status}</td>
+                                </tr>
+                            `;
+        }).join('')}
+                    </tbody>
+                </table>
+
+                <div class="footer">
+                    <p>This report was generated automatically by Das&Co Inventory Management System</p>
+                    <p>For any queries, please contact the inventory management team</p>
+                </div>
+            </body>
+            </html>
+        `);
+
+        printWindow.document.close();
+        printWindow.print();
+    };
+
     if (loading) {
         return (
             <div className="dashboard-container">
@@ -76,10 +163,27 @@ function Dashboard() {
     return (
         <div className="dashboard-container">
             <div className="dashboard-wrapper">
+                {/* Print Header (only visible when printing) */}
+                <div className="print-header">
+                    <div style={{ fontSize: '20pt', fontWeight: 'bold' }}>Das&Co Inventory Management</div>
+                    <div style={{ fontSize: '16pt', margin: '5pt 0' }}>Dashboard Report</div>
+                    <div className="print-date">Generated on: {new Date().toLocaleDateString()}</div>
+                </div>
+
                 {/* Header */}
                 <div className="dashboard-header">
                     <h1 className="dashboard-title">📊 Inventory Dashboard</h1>
                     <p className="dashboard-subtitle">Real-time analytics and insights</p>
+                </div>
+
+                {/* Print Actions */}
+                <div className="print-actions">
+                    <button className="print-btn" onClick={handlePrint}>
+                        🖨️ Print Dashboard
+                    </button>
+                    <button className="print-btn" onClick={handlePrintInventory}>
+                        📋 Print Complete Inventory
+                    </button>
                 </div>
 
                 {/* Navigation */}

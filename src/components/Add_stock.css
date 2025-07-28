@@ -410,3 +410,108 @@
 .adop {
   width: 100% !important;
 }
+
+/* Print Styles for Add_stock */
+@media print {
+  .inventory-container {
+    background: white !important;
+    padding: 0 !important;
+    min-height: auto !important;
+  }
+
+  .inventory-wrapper {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .inventory-header {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    border: 2px solid #000 !important;
+    page-break-after: avoid;
+  }
+
+  .inventory-title {
+    color: black !important;
+    text-shadow: none !important;
+    font-size: 24pt !important;
+  }
+
+  .inventory-subtitle {
+    color: black !important;
+    font-size: 12pt !important;
+  }
+
+  .nav-buttons,
+  .print-actions {
+    display: none !important;
+  }
+
+  .form-section {
+    background: white !important;
+    box-shadow: none !important;
+    border: 1px solid #000 !important;
+    margin-bottom: 15pt !important;
+    page-break-inside: avoid;
+  }
+
+  .form-title {
+    color: black !important;
+    font-size: 14pt !important;
+    border-bottom: 1px solid #000;
+    padding-bottom: 5pt;
+  }
+
+  .inventory-table {
+    border: 1px solid #000 !important;
+    background: white !important;
+    box-shadow: none !important;
+  }
+
+  .inventory-table th {
+    background: #f0f0f0 !important;
+    color: black !important;
+    border: 1px solid #000 !important;
+  }
+
+  .inventory-table td {
+    color: black !important;
+    border: 1px solid #000 !important;
+  }
+
+  .status-badge {
+    background: white !important;
+    color: black !important;
+    border: 1px solid #000 !important;
+  }
+
+  .action-btn,
+  .delete-btn,
+  .edit-btn {
+    display: none !important;
+  }
+
+  .form-grid,
+  .form-group,
+  .form-input,
+  .form-select,
+  .submit-btn,
+  .cancel-btn {
+    display: none !important;
+  }
+
+  .print-header {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 20pt;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10pt;
+  }
+
+  .print-date {
+    font-size: 10pt;
+    color: #666;
+  }
+}

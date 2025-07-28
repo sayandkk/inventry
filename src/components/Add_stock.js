@@ -246,13 +246,133 @@ function Add_stock() {
     }
   };
 
+  // Print functions
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handlePrintFilteredInventory = () => {
+    const filteredItems = getFilteredItems();
+    const printWindow = window.open('', '_blank');
+    const currentDate = new Date().toLocaleDateString();
+
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Inventory Report - ${currentDate}</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; }
+                .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
+                .company-name { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
+                .report-title { font-size: 18px; margin-bottom: 5px; }
+                .date { font-size: 12px; color: #666; }
+                .filters { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9; }
+                table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+                th { background-color: #f0f0f0; font-weight: bold; }
+                .summary { margin-bottom: 20px; }
+                .summary-item { display: inline-block; margin-right: 30px; }
+                .footer { margin-top: 30px; text-align: center; font-size: 10px; color: #666; }
+                .status-out { color: #dc2626; font-weight: bold; }
+                .status-low { color: #d97706; font-weight: bold; }
+                .status-in { color: #16a34a; font-weight: bold; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <div class="company-name">Das&Co Inventory Management</div>
+                <div class="report-title">Inventory Stock Report</div>
+                <div class="date">Generated on: ${currentDate}</div>
+            </div>
+            
+            ${searchTerm || filterCategory || filterStock ? `
+                <div class="filters">
+                    <strong>Applied Filters:</strong>
+                    ${searchTerm ? `Search: "${searchTerm}" ` : ''}
+                    ${filterCategory ? `Category: "${filterCategory}" ` : ''}
+                    ${filterStock ? `Stock Status: "${filterStock.replace('-', ' ')}" ` : ''}
+                </div>
+            ` : ''}
+            
+            <div class="summary">
+                <div class="summary-item"><strong>Items Shown:</strong> ${filteredItems.length}</div>
+                <div class="summary-item"><strong>Total Quantity:</strong> ${filteredItems.reduce((sum, item) => sum + Number(item.quantity || 0), 0)}</div>
+                <div class="summary-item"><strong>Total Value:</strong> ₹${filteredItems.reduce((sum, item) => sum + (Number(item.price || 0) * Number(item.quantity || 0)), 0).toFixed(2)}</div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>SKU</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Price (₹)</th>
+                        <th>Total Value (₹)</th>
+                        <th>Status</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${filteredItems.map(item => {
+      const qty = Number(item.quantity || 0);
+      const status = qty === 0 ? 'Out of Stock' : qty < 10 ? 'Low Stock' : 'In Stock';
+      const statusClass = qty === 0 ? 'status-out' : qty < 10 ? 'status-low' : 'status-in';
+      return `
+                            <tr>
+                                <td>${item.name}</td>
+                                <td>${item.sku || 'N/A'}</td>
+                                <td>${item.category || 'N/A'}</td>
+                                <td>${qty}</td>
+                                <td>${item.unit || 'N/A'}</td>
+                                <td>₹${Number(item.price || 0).toFixed(2)}</td>
+                                <td>₹${(Number(item.price || 0) * qty).toFixed(2)}</td>
+                                <td class="${statusClass}">${status}</td>
+                                <td>${item.updatedAt ? new Date(item.updatedAt).toLocaleDateString() : 'N/A'}</td>
+                            </tr>
+                        `;
+    }).join('')}
+                </tbody>
+            </table>
+
+            <div class="footer">
+                <p>This report was generated automatically by Das&Co Inventory Management System</p>
+                <p>Report includes ${filteredItems.length} items matching the applied filters</p>
+            </div>
+        </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.print();
+  };
+
   return (
     <div className="inventory-container">
       <div className="inventory-wrapper">
+        {/* Print Header (only visible when printing) */}
+        <div className="print-header">
+          <div style={{ fontSize: '20pt', fontWeight: 'bold' }}>Das&Co Inventory Management</div>
+          <div style={{ fontSize: '16pt', margin: '5pt 0' }}>Inventory Report</div>
+          <div className="print-date">Generated on: {new Date().toLocaleDateString()}</div>
+        </div>
+
         {/* Header */}
         <div className="inventory-header">
           <h1 className="inventory-title">📦 Advanced Inventory Management</h1>
           <p className="inventory-subtitle">Add, edit, and manage your inventory with smart features</p>
+        </div>
+
+        {/* Print Actions */}
+        <div className="print-actions">
+          <button className="print-btn" onClick={handlePrint}>
+            🖨️ Print Current View
+          </button>
+          <button className="print-btn" onClick={handlePrintFilteredInventory}>
+            📋 Print Detailed Report
+          </button>
         </div>
 
         {/* Navigation */}
