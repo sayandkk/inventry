@@ -1,135 +1,170 @@
 import React from 'react'
-import "./Home.css"
 import { useNavigate } from 'react-router-dom'
-
-
+import './Home.css'
 
 export const Home = () => {
-
     const navigate = useNavigate();
 
     return (
-        <div>
+        <div className='home-container'>
+            {/* Header */}
+            <header className='header'>
+                <div className='header-content'>
+                    <div className='logo'>Das&Co</div>
+                    <h1 className='header-title'>INVENTORY MANAGEMENT SYSTEM</h1>
+                    <div></div>
+                </div>
+            </header>
 
-            <div className='head'>
-                <h5> INVENTRY MANAGEMENT SYSTEM</h5>
-            </div>
-
-            <div className=' outer'>
-
-                <div className='middle1'>
-
-
-                    <div className='sell'>
-
-
-
-
-
-
-
-
+            {/* Hero Section */}
+            <section className='hero-section'>
+                <div className='hero-content'>
+                    <div className='hero-text'>
+                        <h1 className='hero-title'>
+                            Maximize your warehouse efficiency
+                        </h1>
+                        <p className='hero-subtitle'>
+                            Modern online warehouse management software designed to streamline your operations and boost productivity
+                        </p>
+                        <div className='hero-actions'>
+                            <button
+                                className='cta-button'
+                                onClick={() => navigate("/dashboard")}
+                            >
+                                📊 View Dashboard
+                            </button>
+                            <button
+                                className='secondary-button'
+                                onClick={() => navigate("/Add_stock")}
+                            >
+                                📦 Manage Inventory
+                            </button>
+                        </div>
                     </div>
-                    <div className='add'>
-                        <button type="button" class="button" onClick={() => navigate("/Add_stock")} >
-                            STOCK DETAILS
+                    <div></div>
+                </div>
+            </section>
 
-                        </button>
+            {/* Features Section */}
+            <section className='features-section'>
+                <div className='features-container'>
+                    <div className='section-header'>
+                        <h2 className='section-title'>Improve performance & process time</h2>
+                        <p className='section-subtitle'>
+                            Better organize your warehouse with our smart double entry inventory system
+                        </p>
                     </div>
 
+                    <div className='features-grid'>
+                        <div className='feature-card'>
+                            <div className='feature-icon'>📦</div>
+                            <h3 className='feature-title'>Smart Inventory Tracking</h3>
+                            <p className='feature-description'>
+                                Real-time inventory tracking with automated alerts for low stock levels and seamless restocking workflows.
+                            </p>
+                        </div>
 
+                        <div className='feature-card'>
+                            <div className='feature-icon'>📊</div>
+                            <h3 className='feature-title'>Advanced Analytics</h3>
+                            <p className='feature-description'>
+                                Comprehensive reporting and analytics to help you make data-driven decisions and optimize your operations.
+                            </p>
+                        </div>
 
-
-                    <div className='add'>
-                        <button type="button" class="button" onClick={() => navigate("/Sell")} >
-                            SAILS
-
-                        </button>
+                        <div className='feature-card'>
+                            <div className='feature-icon'>⚡</div>
+                            <h3 className='feature-title'>Lightning Fast Operations</h3>
+                            <p className='feature-description'>
+                                Streamlined processes that reduce manual work and increase efficiency across all warehouse operations.
+                            </p>
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                <div className='details'>
-
-
-
-                    <div className='det1'> <p>Maximize your</p>
-                        <p> warehouse efficiency</p></div>
-
-                    <p className='in'>Modern online warehouse management software</p>
-
-                </div>
-            </div>
-
-
-            <div className='det2'>
-                <div className='firstp'>
-                    <p className='det2p1'>
-                        <p>
-                            Improve performance
-                            & process time
-                        </p>
-                        <p className='det2p2'>
-
-                            Better organize your warehouse with the smart double entry inventory system
-
-                        </p>
-
-                        <p className='det2p3'>
-
-                            Get the most efficient stocking method and improve all your internal operations. Odoo's double-entry inventory has no stock input, output or transformation. Instead, all operations are stock moves between locations.
-                        </p>
-
-                    </p>
-                </div><div className='secondp'>
-                    <div className='img1'>
-                        <h1>      </h1>
+            {/* Stats Section */}
+            <section className='stats-section'>
+                <div className='stats-container'>
+                    <div className='stats-grid'>
+                        <div className='stat-item'>
+                            <div className='stat-number'>99.9%</div>
+                            <div className='stat-label'>Uptime</div>
+                        </div>
+                        <div className='stat-item'>
+                            <div className='stat-number'>24/7</div>
+                            <div className='stat-label'>Support</div>
+                        </div>
+                        <div className='stat-item'>
+                            <div className='stat-number'>500+</div>
+                            <div className='stat-label'>Happy Clients</div>
+                        </div>
+                        <div className='stat-item'>
+                            <div className='stat-number'>1M+</div>
+                            <div className='stat-label'>Items Managed</div>
+                        </div>
                     </div>
                 </div>
+            </section>
 
+            {/* About Section */}
+            <section className='about-section'>
+                <div className='about-container'>
+                    <div className='section-header'>
+                        <h2 className='section-title'>About Our Platform</h2>
+                    </div>
 
-            </div>
+                    <div className='about-content'>
+                        <div className='about-text'>
+                            <h3 className='about-title'>Revolutionizing Warehouse Management</h3>
+                            <p className='about-description'>
+                                We are committed to providing you with a powerful and user-friendly platform that empowers you to make informed inventory decisions, navigate the complex world of warehouse management, and ultimately grow your business operations.
+                            </p>
+                            <p className='about-description'>
+                                Our mission is to democratize warehouse management by offering a comprehensive, educational, and accessible resource for businesses looking to optimize their inventory operations.
+                            </p>
+                        </div>
+                        <div className='about-image'></div>
+                    </div>
+                </div>
+            </section>
 
+            {/* Mission Section */}
+            <section className='mission-section'>
+                <div className='about-container'>
+                    <div className='section-header'>
+                        <h2 className='section-title'>Our Mission</h2>
+                        <p className='section-subtitle'>
+                            Creating a community of efficient warehouse managers
+                        </p>
+                    </div>
 
-            <div className='about'>
-                <h1>About</h1>
+                    <div className='mission-grid'>
+                        <div className='mission-card'>
+                            <h3 className='mission-title'>User-Friendly Platform</h3>
+                            <p className='mission-text'>
+                                Intuitive interface designed for users of all technical levels, ensuring smooth operations across your team.
+                            </p>
+                        </div>
 
-                <br>
-                </br>
+                        <div className='mission-card'>
+                            <h3 className='mission-title'>Portfolio Management</h3>
+                            <p className='mission-text'>
+                                Comprehensive inventory portfolio management with detailed tracking and forecasting capabilities.
+                            </p>
+                        </div>
 
-
-
-                <h2>About Our Stock Exchange Website
-
-                    <p className='aboutp'>We are committed to providing you with a powerful and user-friendly platform that empowers you to make informed investment decisions, navigate the complex world of stocks and securities, and ultimately grow your financial portfolio. We believe that anyone, regardless of their background or experience, should have access to the tools and knowledge needed to thrive in the world of finance.
-
-                    </p>
-                </h2>
-
-                <h2> Our Mission
-
-                    <p className='aboutp'>
-                        Our mission is to democratize finance by offering a comprehensive, educational, and accessible resource for individuals and organizations looking to engage with the stock market. We aim to create a community of informed investors who can confidently navigate the financial markets, manage their investments, and achieve their financial goals.
-
-
-                    </p>
-                </h2>
-
-
-                <h2>Key Features
-
-                    <p className='aboutp'>
-                        User-Friendly Platform
-                        <br></br>
-                        Portfolio Management
-                        <br></br>
-                        News and Updates
-                    </p>
-                </h2>
-
-            </div>
-
-
-        </div >
+                        <div className='mission-card'>
+                            <h3 className='mission-title'>News and Updates</h3>
+                            <p className='mission-text'>
+                                Stay updated with the latest inventory management trends and best practices in the industry.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     )
 }
+
 export default Home;
